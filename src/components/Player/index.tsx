@@ -6,8 +6,9 @@ import $ from "./styles.module.scss";
 import "./slider.css";
 import { useNavigate } from "@tanstack/react-router";
 import { Route } from "../../routes/__root.tsx";
+import BaseReactPlayer, { BaseReactPlayerProps } from "react-player/base";
 
-function usePrevious(value) {
+function usePrevious(value: any) {
   const ref = useRef();
   useEffect(() => {
     ref.current = value;
@@ -29,7 +30,7 @@ export default function Player() {
   const initEnd = search.end || 0;
 
   const [url] = useState("https://www.youtube.com/watch?v=6ocerGNpeK0");
-  const ref = useRef(null);
+  const ref = useRef<BaseReactPlayer<BaseReactPlayerProps>>(null);
 
   // Slider
   const [max, setMax] = useState<number | null>(null);
@@ -95,11 +96,11 @@ export default function Player() {
             const [start, end] = sliderValue;
 
             if (e.playedSeconds < start) {
-              ref.current.seekTo(start);
+              ref?.current?.seekTo(start);
             }
 
             if (e.playedSeconds >= end) {
-              ref.current.seekTo(start);
+              ref?.current?.seekTo(start);
             }
             setPlaying(true);
           }
@@ -114,8 +115,8 @@ export default function Player() {
             value={[currentProgress]}
             className={"slider-root"}
             onValueChange={(val) => {
-              ref.current.seekTo(val);
-              setCurrentProgress(val);
+              ref?.current?.seekTo(val[0]);
+              setCurrentProgress(val[0]);
               // setPlaying(true);
             }}>
             <Slider.Track className={"slider-track"}>
@@ -134,7 +135,7 @@ export default function Player() {
             onValueCommit={() => {
               const [start, end] = sliderValue;
               navigate({
-                search: (prev) => ({
+                search: (prev: any) => ({
                   ...prev,
                   start,
                   end,
@@ -178,14 +179,14 @@ export default function Player() {
             <button
               onClick={() => {
                 const time = ref?.current?.getCurrentTime();
-                setSliderValue([time, sliderValue[1]]);
+                setSliderValue([time || 0, sliderValue[1]]);
               }}>
               Set Start Time
             </button>
             <button
               onClick={() => {
                 const time = ref?.current?.getCurrentTime();
-                setSliderValue([sliderValue[0], time]);
+                setSliderValue([sliderValue[0], time || 0]);
               }}>
               Set End Time
             </button>
