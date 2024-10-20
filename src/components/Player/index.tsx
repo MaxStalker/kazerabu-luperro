@@ -15,21 +15,6 @@ function usePrevious(value) {
   return ref.current;
 }
 
-const useReactPath = () => {
-  const [path, setPath] = React.useState(window.location.pathname);
-  const listenToPopstate = () => {
-    const winPath = window.location.pathname;
-    setPath(winPath);
-  };
-  React.useEffect(() => {
-    window.addEventListener("popstate", listenToPopstate);
-    return () => {
-      window.removeEventListener("popstate", listenToPopstate);
-    };
-  }, []);
-  return path;
-};
-
 // preview image can be fetched here:
 // https://img.youtube.com/vi/{id}/0.jpg
 // https://img.youtube.com/vi/{id}/hqdefault.jpg
