@@ -11,7 +11,7 @@ type MainRouteSearch = {
 
 export const Route = createRootRoute({
   validateSearch: (search: Record<string, unknown>): MainRouteSearch => {
-    let result: MainRouteSearch = {};
+    const result: MainRouteSearch = {};
 
     if (search?.videoUrl) {
       result.videoUrl = search?.videoUrl as string;

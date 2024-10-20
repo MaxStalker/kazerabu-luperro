@@ -28,7 +28,7 @@ export default function Player() {
   const initStart = search.start || 0;
   const initEnd = search.end || 0;
 
-  const [url, setUrl] = useState("https://www.youtube.com/watch?v=6ocerGNpeK0");
+  const [url] = useState("https://www.youtube.com/watch?v=6ocerGNpeK0");
   const ref = useRef(null);
 
   // Slider
@@ -42,13 +42,11 @@ export default function Player() {
   // Loop
   const [playing, setPlaying] = useState(false);
   const [looping, setLooping] = useState(false);
-  const [startLoop, setStartLoop] = useState(null);
-  const [endLoop, setEndLoop] = useState(null);
 
   // Effects
   useEffect(() => {
     setSliderValue([initStart, initEnd || max || 0]);
-  }, [max]);
+  }, [max, initStart, initEnd]);
 
   useEffect(() => {
     const [start, end] = sliderValue;
@@ -61,18 +59,16 @@ export default function Player() {
 
     if (inited) {
       if (start !== prevStart) {
-        ref.current.seekTo(start || 0);
-        setStartLoop(start);
+        ref?.current.seekTo(start || 0);
       }
 
       if (end !== prevEnd) {
-        ref.current.seekTo(end || 0);
-        setEndLoop(end);
+        ref?.current.seekTo(end || 0);
       }
     } else {
       setInited(true);
     }
-  }, [sliderValue]);
+  }, [sliderValue, initEnd, initStart, inited]);
 
   // Render
   return (
