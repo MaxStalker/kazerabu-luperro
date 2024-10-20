@@ -134,11 +134,12 @@ export default function Player() {
             onValueChange={setSliderValue}
             onValueCommit={() => {
               const [start, end] = sliderValue;
-              const url = window.location.href;
-              console.log({ url });
 
               navigate({
-                search: () => ({
+                //@ts-ignore
+                search: (prev) => ({
+                  //@ts-ignore
+                  ...prev,
                   start,
                   end,
                 }),
