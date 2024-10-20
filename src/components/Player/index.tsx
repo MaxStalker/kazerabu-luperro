@@ -59,11 +59,11 @@ export default function Player() {
 
     if (inited) {
       if (start !== prevStart) {
-        ref?.current.seekTo(start || 0);
+        ref?.current?.seekTo(start || 0);
       }
 
       if (end !== prevEnd) {
-        ref?.current.seekTo(end || 0);
+        ref?.current?.seekTo(end || 0);
       }
     } else {
       setInited(true);
