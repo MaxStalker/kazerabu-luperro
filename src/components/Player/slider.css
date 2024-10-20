@@ -1,0 +1,46 @@
+/* styles.css */
+.slider-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.slider-root[data-orientation="vertical"] {
+  flex-direction: column;
+  width: 20px;
+  height: 100px;
+}
+
+.slider-track {
+  position: relative;
+  flex-grow: 1;
+  background-color: #a8a2a2;
+  height: 10px;
+  border-radius: 10px;
+}
+.slider-track[data-orientation="vertical"] {
+  width: 3px;
+}
+
+.slider-range {
+  position: absolute;
+  background-color: #ed8003;
+	height: 100%;
+}
+.slider-range[data-orientation="vertical"] {
+  width: 100%;
+}
+
+.slider-thumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ed8003;
+	outline: 2px solid #b15f02;
+	cursor: grab;
+}
+
+.slider-thumb:active{
+	cursor: grabbing;
+}

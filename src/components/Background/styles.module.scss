@@ -1,0 +1,45 @@
+.container,
+.grid,
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container p {
+  font-size: 1.6rem;
+  color: white;
+  z-index: 2;
+  margin-top: 0.6rem;
+}
+
+.container {
+  background: var(--bg-gradient);
+}
+
+.grid {
+  position: absolute;
+  background-size: 24px 24px;
+  background-image: var(--grid-img);
+  background-repeat: repeat;
+  opacity: 0.05;
+  z-index: 1;
+}
+
+.overlay {
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  background: radial-gradient(60% 60% at 50% 50%, #f4f4f400 0%, #dcdcdcaa 100%);
+}
+
+:global(.digi-light) {
+  .container p {
+    color: #adaaa8;
+  }
+}
