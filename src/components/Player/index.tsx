@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import * as Slider from "@radix-ui/react-slider";
 
-import $ from "./styles.module.scss";
-import "./slider.css";
 import { useNavigate } from "@tanstack/react-router";
 import { Route } from "../../routes/__root.tsx";
 import BaseReactPlayer, { BaseReactPlayerProps } from "react-player/base";
+
+import $ from "./styles.module.scss";
+import "./slider.css";
+import "./styles.css";
 
 function usePrevious(value: any) {
   const ref = useRef();
@@ -28,8 +30,10 @@ export default function Player() {
   // Init Search params
   const initStart = search.start || 0;
   const initEnd = search.end || 0;
+  const videoUrl = search.videoUrl || "";
 
-  const [url] = useState("https://www.youtube.com/watch?v=6ocerGNpeK0");
+  const [inputUrl, setInputUrl] = useState(videoUrl);
+  const [url, setUrl] = useState(videoUrl);
   const ref = useRef<BaseReactPlayer<BaseReactPlayerProps>>(null);
 
   // Slider
@@ -74,38 +78,67 @@ export default function Player() {
   // Render
   return (
     <div className={$["player-container"]}>
-      <ReactPlayer
-        url={url}
-        ref={ref}
-        controls={true}
-        playing={playing}
-        progressInterval={250}
-        onSeek={(e) => {
-          console.log({ sec: e });
-          setCurrentProgress(e);
-        }}
-        onDuration={(duration) => {
-          setMax(duration);
-        }}
-        onPlay={() => setPlaying(true)}
-        onPause={() => setPlaying(false)}
-        onProgress={(e) => {
-          setCurrentProgress(e.playedSeconds);
+      <div className={"url-input"}>
+        <input
+          type={"text"}
+          value={inputUrl}
+          onChange={(e) => {
+            setInputUrl(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            // TODO: load localStorage loops
+            setInited(false);
+            setUrl(inputUrl);
+            navigate({
+              //@ts-ignore
+              search: (prev) => ({
+                //@ts-ignore
+                //...prev,
+                videoUrl: inputUrl,
+              }),
+            });
+          }}>
+          Load
+        </button>
+      </div>
+      <div className={"player-wrapper"}>
+        <ReactPlayer
+          width={"100%"}
+          height={"100%"}
+          url={url}
+          ref={ref}
+          controls={true}
+          playing={playing}
+          progressInterval={250}
+          onSeek={(e) => {
+            console.log({ sec: e });
+            setCurrentProgress(e);
+          }}
+          onDuration={(duration) => {
+            setMax(duration);
+          }}
+          onPlay={() => setPlaying(true)}
+          onPause={() => setPlaying(false)}
+          onProgress={(e) => {
+            setCurrentProgress(e.playedSeconds);
 
-          if (playing && looping) {
-            const [start, end] = sliderValue;
+            if (playing && looping) {
+              const [start, end] = sliderValue;
 
-            if (e.playedSeconds < start) {
-              ref?.current?.seekTo(start);
+              if (e.playedSeconds < start) {
+                ref?.current?.seekTo(start);
+              }
+
+              if (e.playedSeconds >= end) {
+                ref?.current?.seekTo(start);
+              }
+              setPlaying(true);
             }
-
-            if (e.playedSeconds >= end) {
-              ref?.current?.seekTo(start);
-            }
-            setPlaying(true);
-          }
-        }}
-      />
+          }}
+        />
+      </div>
       {max && (
         <div className={$["controls"]}>
           <Slider.Root

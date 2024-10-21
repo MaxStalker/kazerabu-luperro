@@ -1,0 +1,25 @@
+.player-wrapper {
+  width: 640px;
+  height: auto;
+  aspect-ratio: 16/9;
+  position: relative;
+}
+
+.url-input {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.url-input input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 18px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.url-input button {
+  padding: 0.5rem 1rem;
+}
