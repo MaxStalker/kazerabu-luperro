@@ -1,8 +1,9 @@
 .player-wrapper {
-  width: 640px;
+  width: 100%;
   height: auto;
   aspect-ratio: 16/9;
   position: relative;
+  overflow: hidden;
 }
 
 .url-input {
@@ -22,4 +23,12 @@
 
 .url-input button {
   padding: 0.5rem 1rem;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
 }

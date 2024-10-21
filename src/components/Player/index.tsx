@@ -195,7 +195,22 @@ export default function Player() {
             />
           </Slider.Root>
 
-          <div>
+          <div className={"buttons"}>
+            <button
+              onClick={() => {
+                const time = ref?.current?.getCurrentTime();
+                setSliderValue([time || 0, sliderValue[1]]);
+              }}>
+              Set Start Time
+            </button>
+            <button
+              onClick={() => {
+                const time = ref?.current?.getCurrentTime();
+                setSliderValue([sliderValue[0], time || 0]);
+              }}>
+              Set End Time
+            </button>
+
             <button
               onClick={() => {
                 setPlaying(!playing);
@@ -211,20 +226,6 @@ export default function Player() {
                 setPlaying(true);
               }}>
               PlayLoop
-            </button>
-            <button
-              onClick={() => {
-                const time = ref?.current?.getCurrentTime();
-                setSliderValue([time || 0, sliderValue[1]]);
-              }}>
-              Set Start Time
-            </button>
-            <button
-              onClick={() => {
-                const time = ref?.current?.getCurrentTime();
-                setSliderValue([sliderValue[0], time || 0]);
-              }}>
-              Set End Time
             </button>
           </div>
         </div>

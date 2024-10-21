@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  height: 100dvh;
+  min-height: 100dvh;
   width: 100%;
   padding: 0;
   margin: 0;
@@ -17,7 +17,6 @@ body {
   justify-content: center;
   flex-direction: column;
   font-family: Poppins, sans-serif;
-  overflow: hidden;
 
   -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
   text-size-adjust: none; /* prevent webkit from resizing text to fit */
@@ -64,4 +63,8 @@ body {
   to {
     mask-size: 200vmax;
   }
+}
+
+button{
+  padding: 0.5rem 1rem;
 }
