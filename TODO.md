@@ -1,0 +1,5 @@
+- [ ] swap values if end < start
+- [ ] create multiple loops
+  - [ ] store all of them as arrays in URL
+- [ ] store loops in localStorage, use video URL as key to query them
+- [ ] add checkbox to prevent video
