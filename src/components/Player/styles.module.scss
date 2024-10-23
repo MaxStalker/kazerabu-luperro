@@ -1,5 +1,5 @@
 .player-container {
-  width: calc(min(640px, 90%));
+  width: min(1400px, 100%);
   margin: 0 auto;
   display: grid;
   place-items: center;
