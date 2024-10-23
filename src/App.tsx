@@ -8,11 +8,11 @@ import "./index.css";
 import Player from "./components/Player";
 
 function App() {
-  const { toggleMode, mode } = useContext(ThemeContext);
+  const { mode } = useContext(ThemeContext);
 
   return (
     <div className={`digi-${mode}`}>
-      <Logo className={$["logo"]} onClick={toggleMode} />
+      <Logo className={$["logo"]} />
       <Background />
 
       <Player />
