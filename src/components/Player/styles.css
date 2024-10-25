@@ -4,21 +4,24 @@
   aspect-ratio: 16/9;
   position: relative;
   overflow: hidden;
+  background: black;
 }
 
 .url-input {
   width: 100%;
   display: flex;
   gap: 0.5rem;
+  justify-content: flex-end;
 }
 
 .url-input input {
   width: 100%;
-  padding: 0.5rem;
-  font-size: 18px;
+  padding: 0.25rem;
+  font-size: 16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  max-width: 540px;
 }
 
 .url-input button {

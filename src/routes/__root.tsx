@@ -1,6 +1,5 @@
-import * as React from "react";
-import { Outlet, createRootRoute } from "@tanstack/react-router";
-import App from "../App.tsx";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
+import Wrapper from "../components/Wrapper";
 
 type MainRouteSearch = {
   start?: number;
@@ -32,9 +31,10 @@ export const Route = createRootRoute({
     return result;
   },
   component: () => (
-    <React.Fragment>
-      <App />
-      <Outlet />
-    </React.Fragment>
+    <>
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
+    </>
   ),
 });

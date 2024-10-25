@@ -9,6 +9,7 @@ import BaseReactPlayer, { BaseReactPlayerProps } from "react-player/base";
 import $ from "./styles.module.scss";
 import "./slider.css";
 import "./styles.css";
+import useLocalStorage from "../../hooks/useLocalStorage.ts";
 
 function usePrevious(value: any) {
   const ref = useRef();
@@ -32,8 +33,7 @@ export default function Player() {
   const initEnd = search.end || 0;
   const videoUrl = search.videoUrl || "";
 
-  const [inputUrl, setInputUrl] = useState(videoUrl);
-  const [url, setUrl] = useState(videoUrl);
+  const [url] = useState(videoUrl);
   const ref = useRef<BaseReactPlayer<BaseReactPlayerProps>>(null);
 
   // Slider
@@ -47,6 +47,8 @@ export default function Player() {
   // Loop
   const [playing, setPlaying] = useState(false);
   const [looping, setLooping] = useState(false);
+
+  const { addItemToHistory } = useLocalStorage();
 
   // Effects
   useEffect(() => {
@@ -78,31 +80,6 @@ export default function Player() {
   // Render
   return (
     <div className={$["player-container"]}>
-      <div className={"url-input"}>
-        <input
-          type={"text"}
-          value={inputUrl}
-          onChange={(e) => {
-            setInputUrl(e.target.value);
-          }}
-        />
-        <button
-          onClick={() => {
-            // TODO: load localStorage loops
-            setInited(false);
-            setUrl(inputUrl);
-            navigate({
-              //@ts-ignore
-              search: (prev) => ({
-                //@ts-ignore
-                //...prev,
-                videoUrl: inputUrl,
-              }),
-            });
-          }}>
-          Load
-        </button>
-      </div>
       <div className={"player-wrapper"}>
         <ReactPlayer
           width={"100%"}
@@ -112,6 +89,17 @@ export default function Player() {
           controls={true}
           playing={playing}
           progressInterval={250}
+          onReady={(player) => {
+            //@ts-ignore
+            const name = player?.player?.player?.player?.videoTitle;
+
+            let tempUrl = new URL(url);
+            let params = new URLSearchParams(tempUrl.search);
+            const id = params.get("v");
+            const thumbnail = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+
+            addItemToHistory({ url, name, thumbnail });
+          }}
           onSeek={(e) => {
             console.log({ sec: e });
             setCurrentProgress(e);
